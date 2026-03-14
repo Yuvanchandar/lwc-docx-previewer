@@ -1,0 +1,1 @@
+# lwc-docx-previewer
