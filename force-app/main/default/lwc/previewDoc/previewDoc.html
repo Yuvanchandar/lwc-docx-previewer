@@ -7,17 +7,9 @@
                 onchange={handleFiles} 
                 accept=".docx">
             </lightning-input>
-
-            <template if:true={fileName}>
-                <div class="slds-box slds-var-m-top_medium">
-                    <p><strong>File Name:</strong> {fileDetails.name}</p>
-                    <p><strong>Size:</strong> {fileDetails.size} bytes</p>
-                    <p><strong>Type:</strong> {fileDetails.type}</p>
-                </div>
-                <div class="slds-box slds-theme_default slds-text-longform">
-                    <div class="container" lwc:dom="manual"></div>
-                </div>
-            </template>
         </div>
     </lightning-card>
+    <template if:true={fileDetails}>
+        <c-modal-compenent file-details={fileDetails} raw-buffer = {rawBuffer}></c-modal-compenent>
+    </template>
 </template>
