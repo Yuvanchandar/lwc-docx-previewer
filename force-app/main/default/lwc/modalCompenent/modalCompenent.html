@@ -2,7 +2,7 @@
     <template if:true={fileDetails}>
     <lightning-modal-header label="Previewing Doc"></lightning-modal-header>
     <lightning-modal-body>
-        <template if:true={hasRendered}>
+        <template if:true={renderIntiated}>
             <div>
                 <p><strong>File Name:</strong> {fileDetails.name}</p>
                 <p><strong>Size:</strong> {fileDetails.size} bytes</p>
@@ -12,12 +12,12 @@
                 <div class="container" lwc:dom="manual"></div>
             </div>
         </template>
-        <!-- <template if:false={hasRendered}>
+        <template if:false={renderIntiated}>
             <div class="slds-align_absolute-center slds-var-p-around_large">
                 <lightning-spinner alternative-text="Converting document..." size="medium"></lightning-spinner>
                 <p>Converting to HTML...</p>
             </div>
-        </template> -->
+        </template>
     </lightning-modal-body>
     <lightning-modal-footer>
         <lightning-button label="Close" onclick={handleClose}></lightning-button>

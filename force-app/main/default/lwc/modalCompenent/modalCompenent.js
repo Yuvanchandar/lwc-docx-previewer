@@ -7,55 +7,60 @@ export default class ModalCompenent extends LightningModal {
     @api fileDetails;
     @api rawBuffer;
     
-    @track libLoaded = false;
-    @track hasRendered = false;
+    renderIntiated = false;
 
-    connectedCallback () {
-        if (this.libLoaded) {
+    renderedCallback(){
+        if(this.renderIntiated && !this.rawBuffer){
             return;
         }
-
+        this.renderIntiated = true;
         loadScript(this, Mammoth_JS).then(() => {
-            this.libLoaded = true;
             console.log('Mammoth_JS loaded');
             console.log('Available Functions:', Object.keys(window.mammoth || {}));
+            this.renderPreview();
         }).catch(err => {
             console.error('Library failed to load', err);
-            this.libLoaded = true;
         });
     }
 
-    renderedCallback(){
-        if (!this.hasRendered && this.libLoaded) {
-           this.renderPreview();
-        }
+    async renderPreview() {
+    console.log('Inside Render Preview');
+    console.log('Buffer:', this.rawBuffer);
+
+    const container = this.template.querySelector('.container');
+
+    if (!container) {
+        console.log('Container not found');
+        return;
     }
 
-    async renderPreview() {
-        const container = this.template.querySelector('.container');
-        
-        if (!container || !this.rawBuffer) {
-            this.hasRendered = true;
-            return;
-        }
-        
-        try {
-            if (window.mammoth) {
-                const result = await window.mammoth.convertToHtml({ arrayBuffer: this.rawBuffer });                    
-                if (result && result.value) {
-                    container.innerHTML = result.value;
-                    console.log('Preview Rendered Successfully');
-                }
+    if (!this.rawBuffer) {
+        console.log('Buffer not ready yet');
+        return;
+    }
+
+    try {
+        if (window.mammoth) {
+            const result = await window.mammoth.convertToHtml({
+                arrayBuffer: this.rawBuffer
+            });
+
+            console.log('Mammoth result:', result);
+
+            if (result && result.value) {
+                container.innerHTML = result.value;
+                console.log('Preview Rendered Successfully');
             } else {
-                console.warn('Mammoth library not available');
+                console.log('No value returned from mammoth');
             }
-        } catch (error) {
-            console.error('Mammoth conversion error:', error);
-        } finally {
-            this.hasRendered = true;
+        } else {
+            console.log('Mammoth not available');
         }
+    } catch (error) {
+        console.error('Mammoth conversion error:', error);
+    }
     }
     handleClose() {
         this.close('done');
     }
-}
+}  
