@@ -1,3 +1,3 @@
 # lwc-docx-previewer
 
-An LWC for secure, client-side .docx to HTML conversion using Mammoth.js and the FileReader API.
+A Salesforce Lightning Web Component that allows users to preview .docx files directly using the Mammoth.js library.
