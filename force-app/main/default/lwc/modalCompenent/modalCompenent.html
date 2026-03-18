@@ -12,7 +12,7 @@
                 <div class="container" lwc:dom="manual"></div>
             </div>
         </template>
-        <template if:false={renderIntiated}>
+        <template if:false={isLoaded}>
             <div class="slds-align_absolute-center slds-var-p-around_large">
                 <lightning-spinner alternative-text="Converting document..." size="medium"></lightning-spinner>
                 <p>Converting to HTML...</p>
@@ -21,6 +21,7 @@
     </lightning-modal-body>
     <lightning-modal-footer>
         <lightning-button label="Close" onclick={handleClose}></lightning-button>
+        <lightning-button label = "Save to Record" onclick={handleSave}></lightning-button>
     </lightning-modal-footer>
 </template>
 </template>
