@@ -21,7 +21,8 @@ export default class FileUploadWithPreview extends LightningElement {
                 size: 'medium',
                 fileDetails: this.fileDetails,
                 rawBuffer: this.rawBuffer,
-                fileName: this.fileName
+                fileName: this.fileName,
+                recordId: this.recordId
             });
             event.target.value = '';
         };
